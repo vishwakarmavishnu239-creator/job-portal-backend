@@ -14,8 +14,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
     TypeOrmModule.forRootAsync({
       imports:[ConfigModule],
+      inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-      type: 'postgres',
+      type: 'postgres' as const,
+      url: process.env.DATABASE_URL,
       host: configService.get<string>('DB_HOST') || 'localhost',
       port: parseInt(configService.get<string>('DB_PORT') || '5432'),
       username: configService.get<string>('DB_USERNAME') || 'postgres',
@@ -23,9 +25,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       database: configService.get<string>('DB_NAME') || 'job_portal',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false ,
+      ssl: { rejectUnauthorized: false },
       logging: false,
     }),
-    inject: [ConfigService],
+    // inject: [ConfigService],
     }),
 
     UsersModule,
