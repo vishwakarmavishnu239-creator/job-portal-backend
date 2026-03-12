@@ -13,7 +13,11 @@ async function bootstrap() {
     }),
   );
   app.enableCors({
-    origin: '*', //['http://localhost:5173', 'http://localhost:3001'],
+    origin: [
+    'http://localhost:5173',
+    'https://job-portal-frontend-h22f68wal.vercel.app',
+    'https://*.vercel.app',
+  ], //['http://localhost:5173', 'http://localhost:3001'],
      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     Credentials: true,
